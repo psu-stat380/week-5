@@ -1,0 +1,17 @@
+knitr
+dplyr
+ggplot2
+forcats
+purrr
+ISLR2
+tidyverse
+tibble
+tidyr
+readr
+stringr
+kableExtra
+cowplot
+htmlwidgets
+broom
+scatterplot3d
+plotly
