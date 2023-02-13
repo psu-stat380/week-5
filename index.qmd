@@ -5,6 +5,13 @@ title-block-style: default
 execute:
   freeze: true
   cache: true
+# server: shiny
+# format: 
+#   revealjs:
+#     # smaller: true
+#     scrollable: true
+#     fragments: true
+#     chalkboard: true
 format: html
 # format: pdf
 ---
@@ -122,11 +129,7 @@ We want to see if there is a relationship between `species` and `sepal.length`. 
 y <- iris$Sepal.Length
 x <- iris$Species
 
-boxplot(
-    Sepal.Length ~ Species,
-    iris, 
-    col=c("red", "green", "blue")
-)
+boxplot(Sepal.Length ~ Species, iris)
 ```
 
 
@@ -234,8 +237,11 @@ $$
 Consider the `Credit` dataset
 
 ```{R}
-attach(ISLR2::Credit)
-df <- Credit %>% tibble() %>% rename_all(tolower)
+library(ISLR2)
+attach(Credit)
+
+df <- Credit %>% tibble()
+colnames(df) <- tolower(colnames(df))
 df
 ```
 
@@ -243,9 +249,10 @@ and, we'll look at the following three columns: `income, rating, limit`.
 
 ```{R}
 df3 <- df %>% select(income, rating, limit)
+df3
 ```
 
-If we want to see how the credit limit is related to income and ccredit rating, we can visualize the following plot
+If we want to see how the credit limit is related to income and credit rating, we can visualize the following plot
 
 ```{R}
 fig <- plot_ly(df3, x=~income, y=~rating, z=~limit)
@@ -278,14 +285,20 @@ z <- outer(
 fig %>%
     add_surface(x = ranges[[1]], y = ranges[[2]], z = t(z), alpha=0.3) %>% 
     add_markers()
-
 ```
 
 
-<br><br><br><br><br><br>
-<br><br><br><br><br><br>
+What is the interpretation for the coefficients?
 
-## Multiple regression
+1. $\beta_0$ is the expected value of $y$ when $income = 0$ and $rating = 0$
 
-## Example
+2. $\beta_1$ is saying that if $rating$ is held constant and $income$ changes by 1 unit, then the corresponding change in the `limit` is $0.5573$
 
+3. $\beta_2$ is saying that if `income` is held constant and `rating` changes by $1$ unit, then the corresponding change in `limit` is $14.771$
+
+
+What about the significance? 
+
+```{R}
+summary(model)
+```
